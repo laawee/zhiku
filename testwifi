@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>判断网络状态</title>
+  <script type="text/javascript">
+    function checkOnline() {
+      var xhr = new XMLHttpRequest();
+      var startTime = new Date().getTime(); // 记录开始时间
+      xhr.open("HEAD", "123.com", true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          var endTime = new Date().getTime(); // 记录结束时间
+          var timeDiff = endTime - startTime; // 计算响应时间
+          var status = "";
+          if (xhr.status >= 200 && xhr.status < 300) {
+            status = "在线";
+            if (timeDiff <= 500) { // 响应时间小于等于500毫秒
+              document.getElementById("score").innerText = "100"; // 给出满分
+            } else if (timeDiff <= 1000) { // 响应时间大于500毫秒小于等于1秒
+              document.getElementById("score").innerText = "80"; // 给出较高分数
+            } else { // 响应时间大于1秒
+              document.getElementById("score").innerText = "50"; // 给出较低分数
+            }
+            document.getElementById("response-time").innerText = timeDiff + "毫秒"; // 显示响应时间
+          } else { 
+            status = "离线";
+            document.getElementById("score").innerText = "0"; // 给出零分
+          }
+          document.getElementById("status").innerText = status; // 在页面上显示状态信息
+        }
+      };
+      xhr.send();
+    }
+  </script>
+</head>
+<body onload="checkOnline();">
+  <h2>网络状态</h2>
+  <p>当前状态：<span id="status">检测中...</span></p>
+  <p>当前分数：<span id="score">未知</span></p>
+  <p>当前响应时间：<span id="response-time">未知</span></p>
+</body>
+</html>
