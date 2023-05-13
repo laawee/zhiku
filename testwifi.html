@@ -6,7 +6,7 @@
     function checkOnline() {
       var xhr = new XMLHttpRequest();
       var startTime = new Date().getTime(); // 记录开始时间
-      xhr.open("HEAD", "123.com", true);
+      xhr.open("HEAD", "103.92.211.2", true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           var endTime = new Date().getTime(); // 记录结束时间
